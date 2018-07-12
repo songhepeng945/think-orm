@@ -1323,9 +1323,14 @@ class Mongo
                         // 转换ObjectID 字段
                         $val['id'] = $val['_id']->__toString();
                         unset($val['_id']);
+                        $key = $key == "_id" ? 'id' : $key;
                     }
                     $name = $val[$key];
-
+                    
+                    if ($name instanceof ObjectID) {
+                        $name = $name->__toString();
+                    }
+                    
                     if (2 == $count) {
                         $result[$name] = $val[$key2];
                     } elseif (1 == $count) {
